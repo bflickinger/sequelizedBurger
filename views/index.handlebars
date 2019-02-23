@@ -1,0 +1,49 @@
+<div class="jumbotron">
+  <h1 class="display-4">Eat-da-Burger!</h1>
+  <p class="lead">Eat some Burgers! You know you want to!</p>
+  <p class="lead">
+    <div class="form-group">
+      <form class="create-update-form" action="burgers/create" method="POST">
+        <textarea class="form-control" rows="1" id="newBurger" name="burger_name" required
+          placeholder="Name of burger to be added"></textarea></br>
+        <button class="btn btn-primary btn-lg" type="submit">Add a Burger</button>
+      </form>
+    </div>
+  </p>
+</div>
+<div class="container">
+  <div class="row ml-4">
+    <div class="column m-3">
+      <div class="burger-holder" id="uneaten">
+        <h3>Fresh Burgers</h3>
+        <ul>
+          {{#each burgers}}
+          {{#unless this.devoured}}
+          <li>
+            {{this.id}}. {{this.burger_name}}
+            <form action="burgers/update/{{this.id}}?_method=PUT" method="POST">
+              <input type="hidden" name="devoured" value="true">
+              <button class="btn btn-info m-1" type="submit">Eat It!</button>
+            </form>
+          </li>
+          {{/unless}}
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+    <div class="column m-3">
+      <div class="burger-holder" id="eaten">
+        <h3>Dead Burgers</h3>
+        <ul>
+          {{#each burgers}}
+          {{#if this.devoured}}
+          <li>
+            {{this.id}}. {{this.burger_name}}
+          </li>
+          {{/if}}
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
