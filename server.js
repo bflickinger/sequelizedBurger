@@ -3,7 +3,8 @@ const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const app = express();
 const PORT = process.env.PORT || 3000;
-const db = process.env.DATABASE_URL || 'localhost';
+// const db = process.env.DATABASE_URL || 'localhost';
+var db = require("./models");
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({
@@ -17,7 +18,14 @@ app.engine('handlebars', exphbs({
 }));
 app.set('view engine', 'handlebars');
 
-const routes = require('./controllers/burgers_controller.js');
-app.use('/', routes);
+// Routes
+// =============================================================
+require("./routes/post_api_routes.js")(app);
 
-app.listen(PORT);
+// Syncing our sequelize models and then starting our Express app
+// =============================================================
+db.sequelize.sync({}).then(function() {
+  app.listen(PORT, function() {
+    console.log("App listening on PORT " + PORT);
+  });
+});
