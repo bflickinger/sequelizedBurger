@@ -22,7 +22,7 @@ app.set('view engine', 'handlebars');
 // =============================================================
 require("./routes/post_api_routes.js")(app);
 
-// Syncing our sequelize models and then starting our Express app
+// Syncing our sequelize models and then starting our Express app (lol)
 // =============================================================
 db.sequelize.sync({}).then(function() {
   app.listen(PORT, function() {
